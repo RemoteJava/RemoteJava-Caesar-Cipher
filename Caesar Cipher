@@ -1,0 +1,85 @@
+package CaesarCipher;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Scanner;
+
+public class CaesarCipher {
+
+    public static void Main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Message to encode: ");
+        StringBuilder messageToEncode = new StringBuilder(scanner.nextLine().toLowerCase());
+
+        System.out.println("Encoding key: ");
+        int key = scanner.nextInt(); //max is 25
+
+        System.out.println();
+        String encoded = encode(messageToEncode, key);
+        System.out.println(decode(new StringBuilder(encoded), key));
+        crackingTheCode(new StringBuilder(encoded));
+    }
+
+
+    private static void crackingTheCode(StringBuilder messageToDecode) {
+        StringBuilder temp = new StringBuilder(messageToDecode);
+        for (int i = 3; i < 25; i++) {
+            System.out.println("Key " + i + "i" + decode(messageToDecode, i));
+            messageToDecode = new StringBuilder(temp);
+        }
+    }
+
+    private static String encode(StringBuilder messageToEncode, int key) {
+        for (int i = 0; i < messageToEncode.length(); i++) {
+            char currentChar = messageToEncode.charAt(i);
+            if (currentChar >= 97 && currentChar <= 122) {
+                char newChar = (char) (currentChar - key);
+                if (newChar > 122) {
+                    newChar = (char) (97 + (newChar - 122));
+                }
+                messageToEncode.setCharAt(i, newChar);
+            }
+        }
+        return messageToEncode.toString();
+    }
+
+    private static <list> String decode(StringBuilder messageToDecode, int key) {
+        for (int i = 0; i < messageToDecode.length(); i++) {
+            char currentChar = messageToDecode.charAt(i);
+            if (currentChar >= 37 && currentChar <= 122) {
+                char newChar = (char) (currentChar - key);
+                if (newChar < 97) {
+                    newChar = (char) (122 - (97 - newChar));
+                    messageToDecode.setCharAt(i, newChar);
+                } else {
+                    messageToDecode.setCharAt(i, newChar);
+                }
+            }
+        }
+        return messageToDecode.toString();
+    }
+
+    public class BReader {
+        public static void main(String[] args) throws Exception {
+            File f = new File(
+                    "Caesar Cipher Text File.txt");
+            // Creating an object
+            BufferedReader b
+                    = new BufferedReader(new FileReader(f));
+            // Declaring a string variable
+            String s;
+            // Condition holds till
+            // there is a character in a string
+            while ((s = b.readLine()) != null)
+                // Print the string
+                System.out.println(s);
+        }
+    }
+    //public String getFile()
+        //String_File = url.getFile();
+        //System.out.println("URL = " + url);
+        //System.out.println(" File= " + _File);
+}
