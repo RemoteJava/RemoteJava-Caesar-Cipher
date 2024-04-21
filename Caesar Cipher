@@ -1,85 +1,54 @@
-package CaesarCipher;
+//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+package CaesarCipher.java;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class CaesarCipher {
 
-    public static void Main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    static String alphabet = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz";
 
-        System.out.println("Message to encode: ");
-        StringBuilder messageToEncode = new StringBuilder(scanner.nextLine().toLowerCase());
-
-        System.out.println("Encoding key: ");
-        int key = scanner.nextInt(); //max is 25
-
-        System.out.println();
-        String encoded = encode(messageToEncode, key);
-        System.out.println(decode(new StringBuilder(encoded), key));
-        crackingTheCode(new StringBuilder(encoded));
-    }
-
-
-    private static void crackingTheCode(StringBuilder messageToDecode) {
-        StringBuilder temp = new StringBuilder(messageToDecode);
-        for (int i = 3; i < 25; i++) {
-            System.out.println("Key " + i + "i" + decode(messageToDecode, i));
-            messageToDecode = new StringBuilder(temp);
-        }
-    }
-
-    private static String encode(StringBuilder messageToEncode, int key) {
-        for (int i = 0; i < messageToEncode.length(); i++) {
-            char currentChar = messageToEncode.charAt(i);
-            if (currentChar >= 97 && currentChar <= 122) {
-                char newChar = (char) (currentChar - key);
-                if (newChar > 122) {
-                    newChar = (char) (97 + (newChar - 122));
-                }
-                messageToEncode.setCharAt(i, newChar);
+    private static String encoding(String pText, int Key) {
+        pText = pText.toLowerCase();
+        String cText ="";
+        for (int i = 0; i < pText.length(); i++) {
+                int charIndex = alphabet.indexOf(pText.charAt(i));
+                int newIndex = (charIndex + Key);
+                char cipherChar = alphabet.charAt(newIndex);
+                cText = cText + cipherChar;
             }
+        return cText;
         }
-        return messageToEncode.toString();
-    }
 
-    private static <list> String decode(StringBuilder messageToDecode, int key) {
-        for (int i = 0; i < messageToDecode.length(); i++) {
-            char currentChar = messageToDecode.charAt(i);
-            if (currentChar >= 37 && currentChar <= 122) {
-                char newChar = (char) (currentChar - key);
-                if (newChar < 97) {
-                    newChar = (char) (122 - (97 - newChar));
-                    messageToDecode.setCharAt(i, newChar);
-                } else {
-                    messageToDecode.setCharAt(i, newChar);
+    public static String decoding(String cText, int key) {
+            cText = cText.toLowerCase();
+            String pText ="";
+            for (int i = 0 ; i < cText.length(); i++) {
+            int charIndex = alphabet.indexOf(cText.charAt(i));
+                int newIndex = (charIndex - key);
+                if (newIndex <0 ) {
+                    newIndex = alphabet.length() + newIndex;
                 }
+                char plainChar = alphabet.charAt(newIndex);
+                pText = pText + plainChar;
             }
+            return pText;
         }
-        return messageToDecode.toString();
-    }
 
-    public class BReader {
-        public static void main(String[] args) throws Exception {
-            File f = new File(
-                    "Caesar Cipher Text File.txt");
-            // Creating an object
-            BufferedReader b
-                    = new BufferedReader(new FileReader(f));
-            // Declaring a string variable
-            String s;
-            // Condition holds till
-            // there is a character in a string
-            while ((s = b.readLine()) != null)
-                // Print the string
-                System.out.println(s);
-        }
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.print("Enter Plain Text >> ");
+        String plain = scan.nextLine();
+
+        System.out.print("Enter Key >> ");
+        int Key = scan.nextInt();
+
+        String cipherText = encoding(plain, Key);
+
+        System.out.println("The cipher text: " + cipherText);
+
+        System.out.println("The decoded message is: " + decoding(cipherText,Key));
     }
-    //public String getFile()
-        //String_File = url.getFile();
-        //System.out.println("URL = " + url);
-        //System.out.println(" File= " + _File);
 }
+
