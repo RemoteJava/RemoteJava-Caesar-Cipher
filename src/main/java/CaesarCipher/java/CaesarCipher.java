@@ -3,7 +3,7 @@
 package CaesarCipher.java;
 
 import java.util.Scanner;
-//
+
 public class CaesarCipher {
     //This is the string that lists the letters of the alphabet.
     static String alphabet = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz";
