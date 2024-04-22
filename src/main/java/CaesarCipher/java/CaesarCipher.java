@@ -8,6 +8,9 @@ public class CaesarCipher {
     //This is the string that lists the letters of the alphabet.
     static String alphabet = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz";
 
+    public CaesarCipher(int key) {
+    }
+
     //This encodes the text entered by the user.
     private static String encoding(String pText, int Key) {
         pText = pText.toLowerCase();
