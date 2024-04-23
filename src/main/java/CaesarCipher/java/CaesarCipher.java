@@ -2,7 +2,10 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 package CaesarCipher.java;
 
+import java.io.IOException;
 import java.util.Scanner;
+
+import static CaesarCipher.java.BruteForce.searchAttack;
 
 public class CaesarCipher {
     //This is the string that lists the letters of the alphabet.
@@ -41,7 +44,7 @@ public class CaesarCipher {
     }
 
     //This prints the text so the user can enter the Plain Text and the Key.
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner scan = new Scanner(System.in);
 
         //This asks for the Plain Text.
